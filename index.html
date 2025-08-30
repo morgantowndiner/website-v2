@@ -1,32 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Diner</title>
+  <title>Diner Auto View</title>
   <style>
     html, body {
-      margin: 0; 
-      padding: 0; 
-      height: 100%; 
-      width: 100%; 
+      margin: 0; padding: 0; height: 100%; width: 100%;
       overflow: hidden;
+      background: #f9fafb;
+      display: flex;
+      flex-direction: column;
+    }
+    #iframe-container {
+      flex-grow: 1;
+      display: flex;
+      background: white;
+      overflow: hidden;
+      position: relative;
+      justify-content: stretch;
+      align-items: stretch;
     }
     iframe {
       border: none;
-      width: 100vw;
-      height: 100vh;
-      display: block;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      transition: width 0.3s ease, height 0.3s ease;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <iframe
-    src="https://michelleraymond01.wixsite.com/diner/home"
-    frameborder="0"
-    scrolling="auto"
-    title="Diner Website"
-  ></iframe>
+  <div id="iframe-container">
+    <iframe 
+      id="dinerIframe"
+      src="https://michelleraymond01.wixsite.com/diner/home"
+      title="Diner Website"
+      scrolling="auto"
+      frameborder="0"
+    ></iframe>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('dinerIframe');
+    const container = document.getElementById('iframe-container');
+
+    function isDesktopOrChromebook() {
+      const ua = navigator.userAgent;
+      const isChromebook = ua.includes("CrOS");
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(ua);
+      return isChromebook || !isMobile;
+    }
+
+    function setDesktop() {
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      container.style.justifyContent = 'stretch';
+      container.style.alignItems = 'stretch';
+      iframe.style.borderRadius = '0';  // idk
+    }
+
+    function setMobile() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      iframe.style.width = vw + 'px';
+      iframe.style.height = vh + 'px';
+
+      container.style.justifyContent = 'center';
+      container.style.alignItems = 'center';
+      iframe.style.borderRadius = '12px'; // styles
+    }
+
+    function applyView() {
+      if (isDesktopOrChromebook()) {
+        setDesktop();
+      } else {
+        setMobile();
+      }
+    }
+
+    applyView();
+
+    // Resize
+    window.addEventListener('resize', () => {
+      if (!isDesktopOrChromebook()) {
+        setMobile();
+      }
+    });
+  </script>
 </body>
 </html>
 
