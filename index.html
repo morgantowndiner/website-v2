@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <title>Diner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diner </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html, body {
@@ -47,17 +48,14 @@
     }
     button#desktopBtn { background-color: #2563eb; }
     button#desktopBtn:hover { background-color: #1e40af; }
-    button#iphoneBtn { background-color: #16a34a; }
-    button#iphoneBtn:hover { background-color: #166534; }
-    button#samsungBtn { background-color: #7c3aed; }
-    button#samsungBtn:hover { background-color: #5b21b6; }
+    button#mobileBtn { background-color: #16a34a; }
+    button#mobileBtn:hover { background-color: #166534; }
   </style>
 </head>
 <body>
   <div id="buttonsBar">
-    <button id="desktopBtn">Desktop</button>
-    <button id="iphoneBtn">iPhone</button>
-    <button id="samsungBtn">Samsung</button>
+    <button id="desktopBtn">Desktop View</button>
+    <button id="mobileBtn">Mobile (Responsive)</button>
   </div>
 
   <div id="iframe-container">
@@ -81,27 +79,43 @@
       container.style.alignItems = 'stretch';
     }
 
-    function setIphone() {
-      iframe.style.width = '390px';  // iphone
-      iframe.style.height = '844px'; // iphone
-      container.style.justifyContent = 'center';
-      container.style.alignItems = 'center';
-    }
+    function setMobile() {
+      const buttonsHeight = document.getElementById('buttonsBar').offsetHeight;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight - buttonsHeight;
 
-    function setSamsung() {
-      iframe.style.width = '360px';  // android
-      iframe.style.height = '800px'; // android :D
+      iframe.style.width = vw + 'px';
+      iframe.style.height = vh + 'px';
+
       container.style.justifyContent = 'center';
       container.style.alignItems = 'center';
     }
 
     document.getElementById('desktopBtn').addEventListener('click', setDesktop);
-    document.getElementById('iphoneBtn').addEventListener('click', setIphone);
-    document.getElementById('samsungBtn').addEventListener('click', setSamsung);
+    document.getElementById('mobileBtn').addEventListener('click', () => {
+      setMobile();
+    });
 
-    // default is desktop ofc!
-    setDesktop();
+    // meow
+    window.addEventListener('resize', () => {
+      if (currentView === 'mobile') {
+        setMobile();
+      }
+    });
+
+    let currentView = 'desktop';
+// wrapper!
+    function setView(view) {
+      currentView = view;
+      if (view === 'desktop') setDesktop();
+      else if (view === 'mobile') setMobile();
+    }
+
+    document.getElementById('desktopBtn').addEventListener('click', () => setView('desktop'));
+    document.getElementById('mobileBtn').addEventListener('click', () => setView('mobile'));
+    setView('desktop');
   </script>
 </body>
 </html>
+
 
