@@ -1,16 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
   <title>Diner</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100vh; width: 100vw; display: flex; flex-direction: column; background: #f9fafb;
+    }
+    #iframe-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background: white;
+    }
+    iframe {
+      border: none;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      transition: width 0.3s ease, height 0.3s ease;
+    }
+    button {
+      margin-right: 0.75rem;
+    }
+  </style>
 </head>
-<body class="m-0 p-0 h-screen w-screen overflow-hidden">
-  <iframe 
-    src="https://michelleraymond01.wixsite.com/diner/home" 
-    class="w-full h-full border-0"
-    frameborder="0" 
-    scrolling="auto">
-  </iframe>
+<body>
+  <div class="p-4 bg-white flex items-center shadow-md">
+    <button id="desktopBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Desktop</button>
+    <button id="iphoneBtn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">iPhone</button>
+    <button id="samsungBtn" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition">Samsung</button>
+  </div>
+
+  <div id="iframe-container">
+    <iframe 
+      id="dinerIframe"
+      src="https://michelleraymond01.wixsite.com/diner/home"
+      width="100%"
+      height="100%"
+      title="Diner Website"
+      scrolling="auto"
+      frameborder="0">
+    </iframe>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('dinerIframe');
+    const container = document.getElementById('iframe-container');
+
+    function setDesktop() {
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      container.style.justifyContent = 'stretch';
+      container.style.alignItems = 'stretch';
+    }
+
+    function setIphone() {
+      iframe.style.width = '390px';  
+      iframe.style.height = '844px'; 
+      container.style.justifyContent = 'center';
+      container.style.alignItems = 'center';
+    }
+
+    function setSamsung() {
+      iframe.style.width = '360px';  
+      iframe.style.height = '800px'; // idk
+      container.style.justifyContent = 'center';
+      container.style.alignItems = 'center';
+    }
+
+    document.getElementById('desktopBtn').addEventListener('click', setDesktop);
+    document.getElementById('iphoneBtn').addEventListener('click', setIphone);
+    document.getElementById('samsungBtn').addEventListener('click', setSamsung);
+    setDesktop();
+  </script>
 </body>
 </html>
